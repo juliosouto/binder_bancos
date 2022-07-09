@@ -14,12 +14,13 @@ jupyter-vscode-proxy
 
 # lab-related packages
 
-mariadb_kernel
-mariadb==0.9.59
+#mariadb==0.9.59
 sqlalchemy
 ipython-sql
 jupyterlab_sql
 mysqlclient
+mariadb
+mariadb_kernel
 
 # mongodb
 pymongo
