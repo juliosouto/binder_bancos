@@ -28,3 +28,7 @@ pprintpp
 
 numpy
 pandas
+
+setuptools
+python-ldap
+mysql-connector-python
