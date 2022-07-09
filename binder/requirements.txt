@@ -30,5 +30,5 @@ numpy
 pandas
 
 #setuptools
-python-ldap
+#python-ldap
 mysql-connector-python
