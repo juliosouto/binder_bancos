@@ -1,5 +1,5 @@
 # system helpers
-update -y
+#update -y
 htop
 vim
 curl
@@ -18,7 +18,7 @@ libaio-dev
 numactl
 libncurses5
 libmariadb-dev
-#libmariadb3
+libmariadb3
 
 # redis dependencies
 gcc
