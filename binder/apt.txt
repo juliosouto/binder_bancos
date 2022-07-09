@@ -1,5 +1,5 @@
 # system helpers
-#update -y
+update
 
 #python3.9
 #python3.9-dev
