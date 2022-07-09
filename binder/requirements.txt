@@ -19,7 +19,7 @@ ipython-sql
 jupyterlab_sql
 mysqlclient
 #mariadb
-#mariadb_kernel
+mariadb_kernel
 
 # mongodb
 pymongo
