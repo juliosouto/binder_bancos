@@ -1,0 +1,47 @@
+#!/bin/bash
+
+
+###############################################
+# Copying vscode config files
+###############################################
+mkdir -p /home/$USER/.local/share/code-server/User/
+cp ~/.vscode/* /home/$USER/.local/share/code-server/User/
+
+
+###############################################
+# Installing vs code extensions
+###############################################
+
+# code-server --force --install-extension 'ms-toolsai.jupyter' && sleep 1
+# code-server --force --install-extension 'pkief.material-icon-theme' && sleep 1
+
+# open gallery
+export SERVICE_URL=https://open-vsx.org/vscode/gallery
+export ITEM_URL=https://open-vsx.org/vscode/item
+
+# jupyter 
+
+code-server --install-extension 'ms-toolsai.jupyter' && sleep 1
+
+# mariadb extensions
+code-server --install-extension 'mtxr.sqltools' && sleep 1
+code-server --install-extension 'mtxr.sqltools-driver-mysql' && sleep 1
+
+# mongodb extensions
+
+code-server --install-extension 'joeyyizhao.mongo-runner' && sleep 1
+code-server --install-extension 'mongodb.mongodb-vscode' && sleep 1
+
+# redis
+
+code-server --install-extension 'vitorsalgado.vscode-redis' && sleep 1
+code-server --install-extension 'cweijan.vscode-redis-client' && sleep 1
+code-server --install-extension 'kdcro101.vscode-redis' && sleep 1
+
+# code-server --install-extension formulahendry.vscode-mysql && sleep 5
+# code-server --install-extension jakebathman.mysql-syntax && sleep 5
+                                
+###############################################
+# Starting code-server
+###############################################
+code-server . --auth none &

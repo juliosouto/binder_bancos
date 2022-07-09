@@ -1,0 +1,162 @@
+#!/bin/bash
+
+###############################################################
+#          jupyter/jupyterlab extensions/kernels              #
+###############################################################
+
+# [MariaDB Kernel] Install the kernelspec so that the kernel becomes visible to JupyterLab 
+python3 -m mariadb_kernel.install
+
+# ipython-sql extension install
+echo "Ipython-sql extension install"
+jupyter serverextension enable jupyterlab_sql --py --sys-prefix
+
+
+
+# Building Jupyter Lab up
+echo "Building everything up (jupyter lab build)"
+jupyter lab build 
+
+###############################################################
+#             moving to a local installation folder           #
+###############################################################
+
+mkdir ~/resources/local
+cd    ~/resources/local
+touch .gitignore
+
+###############################################################
+#             mariadb installation                           #
+###############################################################
+
+export MARIADB_VERSION=10.4.20
+echo "export MARIADB_VERSION=${MARIADB_VERSION}" >> ~/.bashrc
+echo "export MARIADB_VERSION=${MARIADB_VERSION}" >> ~/.profile
+
+export MARIADB_HOME=$(pwd)/mariadb-${MARIADB_VERSION}
+echo "export MARIADB_HOME=${MARIADB_HOME}"       >> ~/.bashrc
+echo "export MARIADB_HOME=${MARIADB_HOME}"       >> ~/.profile
+
+wget https://archive.mariadb.org/mariadb-${MARIADB_VERSION}/bintar-linux-glibc_214-x86_64/mariadb-${MARIADB_VERSION}-linux-glibc_214-x86_64.tar.gz -q  && \
+     
+tar -xvf mariadb-${MARIADB_VERSION}-linux-glibc_214-x86_64.tar.gz >> /dev/null  && \
+rm mariadb-${MARIADB_VERSION}-linux-glibc_214-x86_64.tar.gz                     && \
+mv mariadb-${MARIADB_VERSION}-linux-glibc_214-x86_64 mariadb-${MARIADB_VERSION} 
+
+echo "coping mariadb libs"
+
+cp -v mariadb-${MARIADB_VERSION}/lib/*.so* /usr/lib/x86_64-linux-gnu/
+
+wget https://archive.mariadb.org/connector-c-3.3.1/mariadb-connector-c-3.3.1-src.tar.gz
+
+tar xvf mariadb-connector-c-3.3.1-src.tar.gz
+
+mkdir -p mariadb-connector-c-3.3.1-src/build
+
+cd mariadb-connector-c-3.3.1-src/build && cmake .. && make && make install
+
+cd    ~/resources/local
+
+# adding bin/ to $path
+echo "export PATH=\$PATH:\$MARIADB_HOME/bin"     >> ~/.bashrc
+echo "export PATH=\$PATH:\$MARIADB_HOME/bin"     >> ~/.profile
+
+###############################################################
+#             mysql-minimal installation                      #
+###############################################################
+
+# export MYSQL_VERSION=8.0.17
+# echo "export MYSQL_VERSION=${MYSQL_VERSION}" >> ~/.bashrc
+# echo "export MYSQL_VERSION=${MYSQL_VERSION}" >> ~/.profile
+
+# export MYSQL_HOME=$(pwd)/mysql-${MYSQL_VERSION}
+# echo "export MYSQL_HOME=${MYSQL_HOME}"       >> ~/.bashrc
+# echo "export MYSQL_HOME=${MYSQL_HOME}"       >> ~/.profile
+       
+# wget https://cdn.mysql.com/archives/mysql-8.0/mysql-${MYSQL_VERSION}-linux-x86_64-minimal.tar.xz -q  && \
+# tar -xf mysql-${MYSQL_VERSION}-linux-x86_64-minimal.tar.xz >> /dev/null                              && \
+# rm      mysql-${MYSQL_VERSION}-linux-x86_64-minimal.tar.xz                                           && \
+# mv      mysql-${MYSQL_VERSION}-linux-x86_64-minimal        mysql-${MYSQL_VERSION} 
+
+# # adding bin/ to $path
+# echo "export PATH=\$PATH:\$MYSQL_HOME/bin"   >> ~/.bashrc
+# echo "export PATH=\$PATH:\$MYSQL_HOME/bin"   >> ~/.profile
+
+###############################################################
+#             mongodb installation commands                   #
+###############################################################
+
+export MONGODB_VERSION=4.2.8
+echo "export MONGODB_VERSION=${MONGODB_VERSION}" >> ~/.bashrc
+echo "export MONGODB_VERSION=${MONGODB_VERSION}" >> ~/.profile
+
+export MONGODB_HOME=$(pwd)/mongodb-${MONGODB_VERSION}
+echo "export MONGODB_HOME=${MONGODB_HOME}"       >> ~/.bashrc
+echo "export MONGODB_HOME=${MONGODB_HOME}"       >> ~/.profile
+
+
+wget  https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu1804-${MONGODB_VERSION}.tgz -q  && \
+tar -xvf mongodb-linux-x86_64-ubuntu1804-${MONGODB_VERSION}.tgz >/dev/null                        && \
+rm       mongodb-linux-x86_64-ubuntu1804-${MONGODB_VERSION}.tgz                                   && \
+mv       mongodb-linux-x86_64-ubuntu1804-${MONGODB_VERSION}        mongodb-${MONGODB_VERSION}
+
+# adding bin and sbin to $path
+echo "export PATH=\$PATH:\$MONGODB_HOME/bin"  >> ~/.bashrc
+echo "export PATH=\$PATH:\$MONGODB_HOME/bin"  >> ~/.profile
+
+###############################################################
+#             redis installation commands             #
+###############################################################
+
+export REDIS_VERSION=6.0.5
+echo "export REDIS_VERSION=${REDIS_VERSION}" >> ~/.bashrc
+echo "export REDIS_VERSION=${REDIS_VERSION}" >> ~/.profile
+
+export REDIS_HOME=$(pwd)/redis-${REDIS_VERSION}
+echo "export REDIS_HOME=${REDIS_HOME}"       >> ~/.bashrc
+echo "export REDIS_HOME=${REDIS_HOME}"       >> ~/.profile
+
+       
+wget http://download.redis.io/releases/redis-${REDIS_VERSION}.tar.gz  && \
+tar xvzf redis-${REDIS_VERSION}.tar.gz                                && \
+rm       redis-${REDIS_VERSION}.tar.gz                                && \
+cd       redis-${REDIS_VERSION}
+make
+# make test
+
+mkdir bin
+cp src/redis-server bin/
+cp src/redis-cli bin/
+
+# adding bin/ to $path
+echo "export PATH=\$PATH:\$REDIS_HOME/bin"   >> ~/.bashrc
+echo "export PATH=\$PATH:\$REDIS_HOME/bin"   >> ~/.profile
+
+
+
+###############################################################
+#             vscode/code-server installation                 #
+###############################################################
+
+export CODE_SERVER_VERSION=3.10.2
+echo "export CODE_SERVER_VERSION=${CODE_SERVER_VERSION}" >> ~/.bashrc
+echo "export CODE_SERVER_VERSION=${CODE_SERVER_VERSION}" >> ~/.profile
+
+export CODE_SERVER_HOME=$(pwd)/code-server-${CODE_SERVER_VERSION}
+echo "export CODE_SERVER_HOME=${CODE_SERVER_HOME}"       >> ~/.bashrc
+echo "export CODE_SERVER_HOME=${CODE_SERVER_HOME}"       >> ~/.profile
+
+
+# Download and install VS Code server
+wget -q -O code-server.tar.gz https://github.com/cdr/code-server/releases/download/v$CODE_SERVER_VERSION/code-server-$CODE_SERVER_VERSION-linux-amd64.tar.gz
+tar xzf code-server.tar.gz
+mv code-server-${CODE_SERVER_VERSION}-linux-amd64 code-server-$CODE_SERVER_VERSION
+rm -rf code-server.tar.gz
+
+# adding bin/ to $path
+echo "export PATH=\$PATH:\$CODE_SERVER_HOME/bin"   >> ~/.bashrc
+echo "export PATH=\$PATH:\$CODE_SERVER_HOME/bin"   >> ~/.profile
+
+# adding extension servers 
+echo "export SERVICE_URL=https://open-vsx.org/vscode/gallery"  >> ~/.bashrc
+echo "export ITEM_URL=https://open-vsx.org/vscode/item"        >> ~/.profile

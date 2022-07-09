@@ -1,0 +1,28 @@
+###############################################################
+#          jupyter/jupyterlab extensions/kernels              #
+###############################################################
+
+Faker
+
+jupyterlab
+
+redis
+
+# jupyter/jupyterlab extensions
+jupyter-server-proxy
+jupyter-vscode-proxy
+
+# lab-related packages
+
+#mariadb
+
+mariadb_kernel
+sqlalchemy
+ipython-sql
+jupyterlab_sql
+mysqlclient
+
+# mongodb
+pymongo==3.10.0
+imongo-kernel
+pprintpp

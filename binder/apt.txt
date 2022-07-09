@@ -1,0 +1,25 @@
+# system helpers
+htop
+vim
+curl
+wget
+net-tools
+tmux
+netcat-openbsd
+jq
+locate
+sudo
+cmake
+
+# mysql/mariadb packages
+libaio1 
+libaio-dev
+numactl
+libncurses5
+#libmariadb-dev
+#libmariadb3
+
+# redis dependencies
+gcc
+build-essential
+libc-bin

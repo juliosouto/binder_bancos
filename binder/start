@@ -1,0 +1,35 @@
+#!/bin/bash
+
+mkdir logs
+
+# making start files executable
+chmod +x ~/binder/start.mariadb
+chmod +x ~/binder/start.vscode
+chmod +x ~/binder/start.mongodb
+chmod +x ~/binder/start.adminmongo
+chmod +x ~/binder/start.redis
+
+# starting mysql or mariadb in parallel
+~/binder/start.mariadb   &
+
+
+# executing vscode-related startup commands
+~/binder/start.vscode   &
+
+# starting mongodb
+~/binder/start.mongodb   &
+
+# starting redis in parallel
+~/binder/start.redis &
+
+# ignoring some files for better presentation
+cd ~
+echo "" >> .gitignore
+echo "resources/local/" >> .gitignore
+echo ".local/" >> .gitignore
+echo "local-home/" >> .gitignore
+
+
+# DO NOT REMOVE(!) 
+# Here is why: https://mybinder.readthedocs.io/en/latest/config_files.html#start-run-code-before-the-user-sessions-starts
+exec "$@"
