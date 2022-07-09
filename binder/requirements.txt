@@ -29,6 +29,6 @@ pprintpp
 numpy
 pandas
 
-setuptools
+#setuptools
 python-ldap
 mysql-connector-python
