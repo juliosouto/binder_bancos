@@ -18,8 +18,8 @@ sqlalchemy
 ipython-sql
 jupyterlab_sql
 mysqlclient
-mariadb
-mariadb_kernel
+#mariadb
+#mariadb_kernel
 
 # mongodb
 pymongo
