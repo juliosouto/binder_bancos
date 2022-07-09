@@ -15,7 +15,7 @@ jupyter-vscode-proxy
 # lab-related packages
 
 mariadb_kernel
-mariadb
+mariadb==1.0.2
 sqlalchemy
 ipython-sql
 jupyterlab_sql
